@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    // MARK: - IBOUTLETS
+
     @IBOutlet weak var memeImageOutlet: UIImageView!
     
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -24,10 +26,13 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
     @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet weak var toolBar: UIToolbar!
     
+    // MARK: - LOCAL VARIABLS
+
+    
     let topTextFieldDelegate = MemeTextFieldDelegate(intialText: "TOP")
+    
     let bottomTextFieldDelegate = MemeTextFieldDelegate(intialText: "BOTTOM")
     
-
     let memeTextAttributes: [NSAttributedString.Key: Any] = [
         NSAttributedString.Key.strokeColor: UIColor.darkGray,
         NSAttributedString.Key.foregroundColor: UIColor.white,
@@ -35,8 +40,8 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
         NSAttributedString.Key.strokeWidth: -5,
     ]
     
-    
-    
+    // MARK: - LIFE CYCLE HOOKS
+
     override func viewWillAppear(_ animated: Bool) {
 
         super.viewWillAppear(animated)
@@ -56,11 +61,7 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
     }
     
     
-    func prepareView () {
-        configureTextField(intialText: "TOP", textField: topTextField)
-        configureTextField(intialText: "BOTTOM", textField: bottomTextField)
-
-    }
+   
     
     // MARK: - KEYBOARD NOTIFICATIONS
     
@@ -112,10 +113,9 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
                 textField.delegate = bottomTextFieldDelegate
 
             }
-
     }
     
-    // MARK: - IMAGE PICKER
+    // MARK: - IBACTIONS
     
     @IBAction func pickAnImage(_ sender: UIBarButtonItem) {
         
@@ -128,6 +128,37 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
         present(imagePickerController, animated: true)
     }
     
+    @IBAction func share(_ sender: UIBarButtonItem) {
+         let meme = generateMemedImage()
+         let activityController = UIActivityViewController(activityItems: [meme], applicationActivities: nil)
+         
+         activityController.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, completed:
+         Bool, arrayReturnedItems: [Any]?, error: Error?) in
+             if completed {
+                 self.save();
+                 return
+             } else {
+                 print("cancel")
+             }
+             if let shareError = error {
+                 print("error while sharing: \(shareError.localizedDescription)")
+             }
+         }
+         
+         present(activityController, animated: true, completion: nil)
+
+     }
+     
+     @IBAction func clearButton(_ sender: Any) {
+         memeImageOutlet.image = nil
+         topTextField.text = topTextFieldDelegate.intialtext
+         bottomTextField.text = bottomTextFieldDelegate.intialtext
+         
+     }
+    
+    
+    // MARK: - IMAGE PICKER
+
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
          shareButton.isEnabled = true
@@ -143,6 +174,14 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
         }
          dismiss(animated: true)
     }
+    
+    
+    func prepareView () {
+           configureTextField(intialText: "TOP", textField: topTextField)
+           configureTextField(intialText: "BOTTOM", textField: bottomTextField)
+
+    }
+    
     
     func save() {
         _ = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: memeImageOutlet.image!, memedImage: generateMemedImage())
@@ -170,29 +209,6 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
         return memedImage
     }
      
-    @IBAction func share(_ sender: UIBarButtonItem) {
-        let meme = generateMemedImage()
-        let activityController = UIActivityViewController(activityItems: [meme], applicationActivities: nil)
-        
-        activityController.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, completed:
-        Bool, arrayReturnedItems: [Any]?, error: Error?) in
-            if completed {
-                self.save();
-                return
-            } else {
-                print("cancel")
-            }
-            if let shareError = error {
-                print("error while sharing: \(shareError.localizedDescription)")
-            }
-        }
-        
-        
-        present(activityController, animated: true, completion: nil)
-        
-        
-
-    }
-    
+ 
 }
 

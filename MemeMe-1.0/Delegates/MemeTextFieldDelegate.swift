@@ -10,17 +10,17 @@ import Foundation
 import UIKit
 
 class MemeTextFieldDelegate: NSObject, UITextFieldDelegate {
-    let _intialtext: String
+    let intialtext: String
 
     
     init(intialText: String) {
-         self._intialtext = intialText
+         self.intialtext = intialText
      }
     
     
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if  textField.text  == _intialtext {
+        if  textField.text  == intialtext {
             textField.text = ""
         }
      }
@@ -33,7 +33,7 @@ class MemeTextFieldDelegate: NSObject, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         if let textFieldvalue = textField.text {
             if textFieldvalue.isEmpty {
-                textField.text = _intialtext
+                textField.text = intialtext
             }
         }
        

@@ -51,6 +51,9 @@
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Item" image="clear.fill" catalog="system" id="Wcf-je-yBW">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <connections>
+                                                <action selector="clearButton:" destination="BYZ-38-t0r" id="NnM-5o-15X"/>
+                                            </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
