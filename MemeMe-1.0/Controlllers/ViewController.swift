@@ -12,16 +12,22 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
     
     @IBOutlet weak var memeImageOutlet: UIImageView!
     
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var clearButton: UIBarButtonItem!
+    
     @IBOutlet weak var camerButton: UIBarButtonItem!
     @IBOutlet weak var galleryButton: UIBarButtonItem!
     
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     
+    @IBOutlet weak var navBar: UINavigationBar!
+    @IBOutlet weak var toolBar: UIToolbar!
+    
     let topTextFieldDelegate = MemeTextFieldDelegate(intialText: "TOP")
     let bottomTextFieldDelegate = MemeTextFieldDelegate(intialText: "BOTTOM")
-
     
+
     let memeTextAttributes: [NSAttributedString.Key: Any] = [
         NSAttributedString.Key.strokeColor: UIColor.darkGray,
         NSAttributedString.Key.foregroundColor: UIColor.white,
@@ -29,10 +35,13 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
         NSAttributedString.Key.strokeWidth: -5,
     ]
     
+    
+    
     override func viewWillAppear(_ animated: Bool) {
 
         super.viewWillAppear(animated)
         camerButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        shareButton.isEnabled = false
         subscribeToKeyboardNotifications()
     }
 
@@ -52,6 +61,8 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
         configureTextField(intialText: "BOTTOM", textField: bottomTextField)
 
     }
+    
+    // MARK: - KEYBOARD NOTIFICATIONS
     
     func subscribeToKeyboardNotifications() {
 
@@ -86,6 +97,8 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
         return keyboardSize.cgRectValue.height
     }
     
+    // MARK: - TEXTFIELDS
+    
     func configureTextField(intialText: String,  textField: UITextField)  {
         
            textField.defaultTextAttributes = memeTextAttributes
@@ -102,7 +115,8 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
 
     }
     
-
+    // MARK: - IMAGE PICKER
+    
     @IBAction func pickAnImage(_ sender: UIBarButtonItem) {
         
         let imagePickerController = UIImagePickerController()
@@ -115,15 +129,70 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
+        
+         shareButton.isEnabled = true
          memeImageOutlet.image = info[.originalImage] as? UIImage
          dismiss(animated: true)
      }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        if memeImageOutlet.image != nil {
+            shareButton.isEnabled = true
+        } else {
+            shareButton.isEnabled = false
+        }
          dismiss(animated: true)
     }
+    
+    func save() {
+        _ = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: memeImageOutlet.image!, memedImage: generateMemedImage())
+    }
+    
+    func generateMemedImage() -> UIImage {
+        
+        toolBar.isHidden = true
+        navBar.isHidden = true
+        if  bottomTextField.text! == "BOTTOM" {
+            bottomTextField.isHidden = true
+        }
+
+        // Render view to an image
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+        let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        //show toolbar
+        toolBar.isHidden = false
+        navBar.isHidden = false
+        bottomTextField.isHidden = false
+
+        return memedImage
+    }
      
+    @IBAction func share(_ sender: UIBarButtonItem) {
+        let meme = generateMemedImage()
+        let activityController = UIActivityViewController(activityItems: [meme], applicationActivities: nil)
+        
+        activityController.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, completed:
+        Bool, arrayReturnedItems: [Any]?, error: Error?) in
+            if completed {
+                self.save();
+                return
+            } else {
+                print("cancel")
+            }
+            if let shareError = error {
+                print("error while sharing: \(shareError.localizedDescription)")
+            }
+        }
+        
+        
+        present(activityController, animated: true, completion: nil)
+        
+        
+
+    }
     
 }
 

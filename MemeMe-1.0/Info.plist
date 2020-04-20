@@ -60,12 +60,14 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like access to your camera to enable you take pictures for your Meme</string>
     
-    <key>NSCameraUsageDescription</key>
-    <string>$(PRODUCT_NAME) would like access to your camera to enable you take pictures for your Meme</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like access to your gallery to enable you select pictures for your Meme  </string>
     
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>$(PRODUCT_NAME) would like access to your gallery to enable you select pictures for your Meme  </string>
-    
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>$(PRODUCT_NAME) would like access to your gallery to enable you save generated Memes </string>
+
 </dict>
 </plist>

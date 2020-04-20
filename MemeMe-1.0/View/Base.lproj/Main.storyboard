@@ -45,6 +45,9 @@
                                     <navigationItem title="MemeMe" largeTitleDisplayMode="never" id="k3F-XY-TKf">
                                         <barButtonItem key="leftBarButtonItem" image="square.and.arrow.up.on.square.fill" catalog="system" id="LVi-XT-bfu">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <connections>
+                                                <action selector="share:" destination="BYZ-38-t0r" id="iQe-sC-XbU"/>
+                                            </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Item" image="clear.fill" catalog="system" id="Wcf-je-yBW">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -57,12 +60,12 @@
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cOm-Ll-VfB" userLabel="TopTextField">
                                 <rect key="frame" x="16" y="108" width="382" height="34"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fGZ-g3-v5A" userLabel="BottomTextField">
                                 <rect key="frame" x="16" y="710" width="382" height="34"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                         </subviews>
@@ -92,8 +95,12 @@
                     <connections>
                         <outlet property="bottomTextField" destination="fGZ-g3-v5A" id="a0E-xo-wFo"/>
                         <outlet property="camerButton" destination="7aF-fB-ZBc" id="W5n-cw-AGX"/>
+                        <outlet property="clearButton" destination="Wcf-je-yBW" id="5Dd-MG-2B1"/>
                         <outlet property="galleryButton" destination="Mpj-Ok-3IA" id="K9M-Fz-nvo"/>
                         <outlet property="memeImageOutlet" destination="smS-pm-BOc" id="9qX-n3-ajQ"/>
+                        <outlet property="navBar" destination="QwL-x7-SAX" id="k28-6Z-24g"/>
+                        <outlet property="shareButton" destination="LVi-XT-bfu" id="dAV-vi-9BF"/>
+                        <outlet property="toolBar" destination="e4l-Yi-cdq" id="rAe-yS-GJ1"/>
                         <outlet property="topTextField" destination="cOm-Ll-VfB" id="Ld2-6X-zck"/>
                     </connections>
                 </viewController>
