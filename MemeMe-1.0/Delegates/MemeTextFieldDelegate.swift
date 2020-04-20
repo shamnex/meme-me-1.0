@@ -10,11 +10,33 @@ import Foundation
 import UIKit
 
 class MemeTextFieldDelegate: NSObject, UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return false
-    }
+    let _intialtext: String
+
+    
+    init(intialText: String) {
+         self._intialtext = intialText
+     }
+    
+    
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = ""
+        if  textField.text  == _intialtext {
+            textField.text = ""
+        }
+     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        if let textFieldvalue = textField.text {
+            if textFieldvalue.isEmpty {
+                textField.text = _intialtext
+            }
+        }
+       
     }
 }
+

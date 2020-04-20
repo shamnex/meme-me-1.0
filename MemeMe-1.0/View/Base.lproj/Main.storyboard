@@ -55,11 +55,14 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="smS-pm-BOc">
                                 <rect key="frame" x="0.0" y="88" width="414" height="676"/>
                             </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cOm-Ll-VfB" userLabel="TopTextField">
-                                <rect key="frame" x="159" y="115" width="97" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="textColor" red="0.99307399988174438" green="0.99321621656417847" blue="0.99304300546646118" alpha="0.9995117188" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Heavy" family="Avenir Next Condensed" pointSize="28"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cOm-Ll-VfB" userLabel="TopTextField">
+                                <rect key="frame" x="16" y="108" width="382" height="34"/>
+                                <nil key="textColor"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fGZ-g3-v5A" userLabel="BottomTextField">
+                                <rect key="frame" x="16" y="710" width="382" height="34"/>
+                                <nil key="textColor"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                         </subviews>
@@ -67,12 +70,18 @@
                         <constraints>
                             <constraint firstItem="QwL-x7-SAX" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="4Ga-r5-cDk"/>
                             <constraint firstItem="e4l-Yi-cdq" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="BYK-nS-31h"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fGZ-g3-v5A" secondAttribute="trailing" constant="16" id="CNl-CI-RtH"/>
                             <constraint firstItem="smS-pm-BOc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="MOz-nm-oko"/>
                             <constraint firstItem="smS-pm-BOc" firstAttribute="top" secondItem="QwL-x7-SAX" secondAttribute="bottom" id="OkV-BS-aKV"/>
                             <constraint firstItem="e4l-Yi-cdq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="P9n-Gc-lIB"/>
                             <constraint firstItem="e4l-Yi-cdq" firstAttribute="top" secondItem="smS-pm-BOc" secondAttribute="bottom" id="QHm-Ln-AQI"/>
                             <constraint firstItem="e4l-Yi-cdq" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="WgU-LA-hAR"/>
+                            <constraint firstItem="fGZ-g3-v5A" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="b1s-XO-KOB"/>
+                            <constraint firstItem="e4l-Yi-cdq" firstAttribute="top" secondItem="fGZ-g3-v5A" secondAttribute="bottom" constant="20" id="l5p-7o-kwg"/>
+                            <constraint firstItem="cOm-Ll-VfB" firstAttribute="top" secondItem="QwL-x7-SAX" secondAttribute="bottom" constant="20" id="oZm-PF-6dB"/>
+                            <constraint firstItem="cOm-Ll-VfB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="qid-vY-tYE"/>
                             <constraint firstItem="smS-pm-BOc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="uTu-YC-AYp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cOm-Ll-VfB" secondAttribute="trailing" constant="16" id="wie-da-2EC"/>
                             <constraint firstItem="QwL-x7-SAX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="yAd-7S-sBm"/>
                             <constraint firstItem="QwL-x7-SAX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="zwE-pN-ooV"/>
                         </constraints>
@@ -81,6 +90,7 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="bottomTextField" destination="fGZ-g3-v5A" id="a0E-xo-wFo"/>
                         <outlet property="camerButton" destination="7aF-fB-ZBc" id="W5n-cw-AGX"/>
                         <outlet property="galleryButton" destination="Mpj-Ok-3IA" id="K9M-Fz-nvo"/>
                         <outlet property="memeImageOutlet" destination="smS-pm-BOc" id="9qX-n3-ajQ"/>
