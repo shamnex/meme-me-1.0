@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MemeEditorViewController:  UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: - IBOUTLETS
 
@@ -153,6 +153,8 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
          memeImageOutlet.image = nil
          topTextField.text = topTextFieldDelegate.intialtext
          bottomTextField.text = bottomTextFieldDelegate.intialtext
+         dismiss(animated: true, completion: nil)
+
          
      }
     
@@ -179,12 +181,16 @@ class ViewController:  UIViewController, UIImagePickerControllerDelegate, UINavi
     func prepareView () {
            configureTextField(intialText: "TOP", textField: topTextField)
            configureTextField(intialText: "BOTTOM", textField: bottomTextField)
-
     }
     
     
     func save() {
-        _ = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: memeImageOutlet.image!, memedImage: generateMemedImage())
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: memeImageOutlet.image!, memedImage: generateMemedImage())
+        
+         let object = UIApplication.shared.delegate
+         let appDelegate = object as! AppDelegate
+         appDelegate.memes.append(meme)
+         print(appDelegate.memes.count)
     }
     
     func generateMemedImage() -> UIImage {
