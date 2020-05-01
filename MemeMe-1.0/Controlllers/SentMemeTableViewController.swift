@@ -8,7 +8,18 @@
 
 import UIKit
 
-class SentMemeTableViewController: UIViewController, UITabBarDelegate, UITableViewDataSource {
+class SentMemeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var _tableView: UITableView!
+
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = false
+
+        _tableView!.reloadData()
+        
+    }
     
     var memes: [Meme]! {
         let object = UIApplication.shared.delegate
@@ -17,8 +28,13 @@ class SentMemeTableViewController: UIViewController, UITabBarDelegate, UITableVi
     }
     
     
+       func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+          return true
+      }
+      
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(memes.count)
         return memes.count
     }
     
@@ -33,6 +49,23 @@ class SentMemeTableViewController: UIViewController, UITabBarDelegate, UITableVi
         
     }
     
+    func tableView(_ tableView: UITableView,
+                   didSelectRowAt indexPath: IndexPath) {
+        let selectedMeme = memes[indexPath.row]
+        
+        print(indexPath.row)
+
+        let memeDetail = storyboard?.instantiateViewController(
+            identifier: "MemeDetailViewController") as! MemeDetailViewController
+
+        memeDetail.meme = selectedMeme
+
+        navigationController?.pushViewController(
+            memeDetail, animated: true)
+    }
+    
+  
+
 
     override func viewDidLoad() {
    

@@ -43,8 +43,9 @@ class MemeEditorViewController:  UIViewController, UIImagePickerControllerDelega
     // MARK: - LIFE CYCLE HOOKS
 
     override func viewWillAppear(_ animated: Bool) {
-
         super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+        tabBarController?.tabBar.isHidden = true
         camerButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         shareButton.isEnabled = false
         subscribeToKeyboardNotifications()
@@ -153,7 +154,7 @@ class MemeEditorViewController:  UIViewController, UIImagePickerControllerDelega
          memeImageOutlet.image = nil
          topTextField.text = topTextFieldDelegate.intialtext
          bottomTextField.text = bottomTextFieldDelegate.intialtext
-         dismiss(animated: true, completion: nil)
+         navigationController?.popViewController(animated: true)
 
          
      }
@@ -190,7 +191,7 @@ class MemeEditorViewController:  UIViewController, UIImagePickerControllerDelega
          let object = UIApplication.shared.delegate
          let appDelegate = object as! AppDelegate
          appDelegate.memes.append(meme)
-         print(appDelegate.memes.count)
+         navigationController?.popViewController(animated: true)
     }
     
     func generateMemedImage() -> UIImage {

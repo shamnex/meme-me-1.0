@@ -22,17 +22,14 @@ class SentMemeCollectionViewController: UIViewController, UICollectionViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if UIDevice.current.orientation.isLandscape {
-            setupLandScapeView( view.frame.size)
-        } else {
-            setupPortratView( view.frame.size)
-            
-        }
+       setupView()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = false
         uiCollectionView.reloadData()
 
     }
@@ -40,32 +37,27 @@ class SentMemeCollectionViewController: UIViewController, UICollectionViewDelega
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        if UIDevice.current.orientation.isLandscape {
-            setupLandScapeView(size)
-        } else {
-            setupPortratView(size)
-        }
+     setupView()
     }
     
-    func setupPortratView(_ size: CGSize?) {
-        let viewWidth = size?.width ?? view.frame.size.width
-        let space:CGFloat = 3.0
-        let dimention = (viewWidth - (2 * space)) / ( 3.0 )
-        flowLayout.minimumInteritemSpacing = space
-        flowLayout.minimumLineSpacing = space
-        flowLayout.itemSize = CGSize(width: dimention, height: dimention)
-    }
+ 
     
-    func setupLandScapeView(_ size: CGSize?) {
+    func setupView() {
+        let space: CGFloat
+        let dimension: CGFloat
         
-        
-        let height = size?.width ?? view.frame.size.width
-        let space:CGFloat = 3.0
-        let dimention = (height - 3 * space) / ( 4.0)
-    
-        flowLayout.minimumInteritemSpacing = space
+        if (UIDevice.current.orientation.isPortrait) {
+             space = 3.0
+             dimension = (view.frame.size.width - (2 * space)) / 3 //3 per line
+         } else {
+             space = 1.0
+             dimension = (view.frame.size.width - (1 * space)) / 5
+         }
+         
         flowLayout.minimumLineSpacing = space
-        flowLayout.itemSize = CGSize(width: dimention, height: dimention)
+
+         flowLayout.minimumInteritemSpacing = space
+         flowLayout.itemSize = CGSize(width: dimension, height: dimension)
     }
     
     
@@ -73,7 +65,7 @@ class SentMemeCollectionViewController: UIViewController, UICollectionViewDelega
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return memes.count
+        return memes.count + 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -81,9 +73,13 @@ class SentMemeCollectionViewController: UIViewController, UICollectionViewDelega
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemeCollectionViewCell", for: indexPath) as! MemeCollectionViewCell
         
-         cell.configureCell(meme: memes[indexPath.item])
+//         cell.configureCell(meme: memes[indexPath.item])
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
     }
     
     
