@@ -337,7 +337,7 @@
                         <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="8xf-6X-Jak">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="presentation" id="kND-r5-ZIt"/>
+                                <segue destination="BYZ-38-t0r" kind="show" id="kND-r5-ZIt"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -361,6 +361,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Aw0-YY-MRi">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -382,6 +385,6 @@
         <image name="square.and.arrow.up.on.square.fill" catalog="system" width="58" height="64"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Gpi-aD-V8w"/>
+        <segue reference="kND-r5-ZIt"/>
     </inferredMetricsTieBreakers>
 </document>

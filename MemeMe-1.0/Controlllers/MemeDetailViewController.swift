@@ -16,8 +16,6 @@ class MemeDetailViewController: UIViewController {
             memImage.image = meme.memedImage
         }
         super.viewDidLoad()
-
     }
     
-
 }

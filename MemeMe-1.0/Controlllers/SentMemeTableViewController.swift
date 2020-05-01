@@ -9,29 +9,41 @@
 import UIKit
 
 class SentMemeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    // MARK: - IBOUTLETS
+    
     @IBOutlet weak var _tableView: UITableView!
-
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = false
-        tabBarController?.tabBar.isHidden = false
+    // MARK: - VARIABLES
 
-        _tableView!.reloadData()
-        
-    }
-    
     var memes: [Meme]! {
         let object = UIApplication.shared.delegate
         let appDelegate = object as! AppDelegate
         return appDelegate.memes
     }
     
+    // MARK: - LIFE CYCLE HOOKS
     
-       func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-          return true
-      }
-      
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = false
+        _tableView!.reloadData()
+        
+    }
+    
+    // MARK: - TABLEVIEW CONFIGS
+
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,28 +65,21 @@ class SentMemeTableViewController: UIViewController, UITableViewDelegate, UITabl
                    didSelectRowAt indexPath: IndexPath) {
         let selectedMeme = memes[indexPath.row]
         
-        print(indexPath.row)
-
         let memeDetail = storyboard?.instantiateViewController(
             identifier: "MemeDetailViewController") as! MemeDetailViewController
-
+        
         memeDetail.meme = selectedMeme
-
+        
         navigationController?.pushViewController(
             memeDetail, animated: true)
     }
     
-  
-
-
-    override func viewDidLoad() {
-   
-        super.viewDidLoad()
-
-    }
     
-  
-
     
 
+    
+    
+    
+    
+    
 }

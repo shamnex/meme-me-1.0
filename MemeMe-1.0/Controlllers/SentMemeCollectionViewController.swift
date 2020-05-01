@@ -10,19 +10,25 @@ import UIKit
 
 class SentMemeCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    // MARK: - VARIABLES
+
+    
     var memes: [Meme]! {
         let object = UIApplication.shared.delegate
         let appDelegate = object as! AppDelegate
         return appDelegate.memes
     }
-    @IBOutlet weak var uiCollectionView: UICollectionView!
     
+    // MARK: - IBOUTLETS
+
+    @IBOutlet weak var uiCollectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
-    
+    // MARK: - LIFE CYCLE HOOKS
+
     override func viewDidLoad() {
         super.viewDidLoad()
-       setupView()
+        setupView()
         
     }
     
@@ -30,58 +36,78 @@ class SentMemeCollectionViewController: UIViewController, UICollectionViewDelega
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
         tabBarController?.tabBar.isHidden = false
-        uiCollectionView.reloadData()
+        uiCollectionView!.reloadData()
 
     }
-    
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-     setupView()
+        if UIDevice.current.orientation.isLandscape {
+            setupLandScapeView(size)
+        } else {
+            setupPortratView(size)
+        }
     }
     
- 
+    // MARK: - VIEW CONFIGURATION
+
+    func setupPortratView(_ size: CGSize?) {
+        let viewWidth = size?.width ?? view.frame.size.width
+        let space:CGFloat = 3.0
+        let dimention = (viewWidth - (2 * space)) / ( 3.0 )
+        flowLayout.minimumInteritemSpacing = space
+        flowLayout.minimumLineSpacing = space
+        flowLayout.itemSize = CGSize(width: dimention, height: dimention)
+    }
+    
+    func setupLandScapeView(_ size: CGSize?) {
+        
+        
+        let height = size?.width ?? view.frame.size.width
+        let space:CGFloat = 3.0
+        let dimention = (height - 3 * space) / ( 4.0)
+    
+        flowLayout.minimumInteritemSpacing = space
+        flowLayout.minimumLineSpacing = space
+        flowLayout.itemSize = CGSize(width: dimention, height: dimention)
+    }
+    
     
     func setupView() {
-        let space: CGFloat
-        let dimension: CGFloat
         
         if (UIDevice.current.orientation.isPortrait) {
-             space = 3.0
-             dimension = (view.frame.size.width - (2 * space)) / 3 //3 per line
+            setupPortratView(view.frame.size)
          } else {
-             space = 1.0
-             dimension = (view.frame.size.width - (1 * space)) / 5
+            setupLandScapeView(view.frame.size)
          }
-         
-        flowLayout.minimumLineSpacing = space
-
-         flowLayout.minimumInteritemSpacing = space
-         flowLayout.itemSize = CGSize(width: dimension, height: dimension)
+  
     }
     
-    
-    
-    
-    
+    // MARK: - COLLECTION VIEW SETUP
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return memes.count + 10
+        return memes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemeCollectionViewCell", for: indexPath) as! MemeCollectionViewCell
-        
-//         cell.configureCell(meme: memes[indexPath.item])
-        
-        return cell
+         cell.configureCell(meme: memes[indexPath.item])
+         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+        
+        let selectedMeme = memes[indexPath.row]
+         
+         let memeDetail = storyboard?.instantiateViewController(
+             identifier: "MemeDetailViewController") as! MemeDetailViewController
+
+         memeDetail.meme = selectedMeme
+
+         navigationController?.pushViewController(
+             memeDetail, animated: true)
     }
-    
-    
     
 }
